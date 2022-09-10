@@ -1,11 +1,23 @@
-function TaskCard({ name }) {
+import { Draggable } from "react-beautiful-dnd";
+
+function TaskCard({ id, name, index }) {
   return (
     <>
-      <div className="taskCard">
-        <p>{name}</p>
-      </div>
+      <Draggable key={id} draggableId={id} index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <div className="taskCard">
+              <p>{name}</p>
+            </div>
+          </div>
+        )}
+      </Draggable>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .taskCard {
           margin: 8px;
           border: 1px solid black;
