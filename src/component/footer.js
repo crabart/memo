@@ -3,12 +3,12 @@ function Footer() {
     <footer>
       <div className="footerTitle">Thank you for using!!</div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         footer {
           height: 100px;
           background-color: #c1e0ff;
         }
-        
+
         .footerTitle {
           float: left;
           font-size: 12px;
@@ -16,8 +16,7 @@ function Footer() {
         }
       `}</style>
     </footer>
-
   );
-};
+}
 
 export default Footer;

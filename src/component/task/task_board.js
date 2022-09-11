@@ -1,19 +1,35 @@
+import { Droppable } from "react-beautiful-dnd";
 import TaskCard from "./task_card";
 
-function TaskBoard({ boardName, taskCards }) {
+function TaskBoard({ boardName, boardId, taskCards }) {
   return (
     <>
-      <div className="taskBoard">
-        <h3>{boardName}</h3>
+      <Droppable droppableId={boardId}>
+        {(provided, snapshot) => (
+          <div
+            className="taskBoard"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            <h3>{boardName}</h3>
 
-        {taskCards.map((card) => {
-          return <TaskCard name={card.name} />;
-        })}
-      </div>
+            {taskCards.map((card, index) => {
+              return (
+                <TaskCard
+                  key={card.id}
+                  id={card.id}
+                  name={card.name}
+                  index={index}
+                />
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
 
-      <style jsx>{`
+      <style jsx="true">{`
         .taskBoard {
-          display: inline-block;
           margin: 10px 0 10px 10px;
           border: 1px solid black;
         }
