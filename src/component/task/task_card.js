@@ -17,7 +17,7 @@ function TaskCard({ id, name, index }) {
         )}
       </Draggable>
 
-      <style jsx="true">{`
+      <style jsx>{`
         .taskCard {
           margin: 8px;
           border: 1px solid black;
