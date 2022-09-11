@@ -7,9 +7,10 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
   const [isChange, setIsChange] = useState(false);
   const [inputWidth, setInputWidth] = useState("");
   const [inputHeight, setInputHeight] = useState("");
-  const [taskCardPadding, setTaskCardPadding] = useState(defaultCardPadding);
   const cardRefInput = useRef(null);
   const cardRef = useRef(null);
+
+  const taskCardPadding = isChange ? "0px" : defaultCardPadding;
 
   useEffect(() => {
     if (isChange) {
@@ -19,7 +20,6 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
 
   const cardClickHandler = () => {
     if (!isChange) {
-      setTaskCardPadding("0px");
       setInputHeight(cardRef.current.clientHeight - 2 + "px");
       setInputWidth(cardRef.current.clientWidth - 8 + "px");
       setIsChange(true);
@@ -29,7 +29,6 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
   const changeCardNameImpl = ({ name }) => {
     changeCardNameCallBack({ name: name, cardId: id });
     setIsChange(false);
-    setTaskCardPadding(defaultCardPadding);
   };
 
   const cardSubmitHandler = (e) => {
