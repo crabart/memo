@@ -63,6 +63,10 @@ function Main() {
   const [taskBoard, setTaskBoard] = useState(defaultBoard);
 
   const onDragEndHandler = (data) => {
+    if (!data.destination) {
+      return
+    }
+
     const mainTaskBoard = [...taskBoard];
     const sourceTaskBoardIndex = mainTaskBoard.findIndex((element) => {
       return element.id === data.source.droppableId;
