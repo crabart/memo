@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import TaskCard from "./task_card";
 
-function TaskBoard({ boardName, boardId, taskCards }) {
+function TaskBoard({ boardName, boardId, taskCards, changeNameCallback }) {
   const [isChange, setIsChange] = useState(false);
   const [inputWidth, setInputWidth] = useState("");
   const [inputHeight, setInputHeight] = useState("");
@@ -10,17 +10,12 @@ function TaskBoard({ boardName, boardId, taskCards }) {
   const titleRef = useRef(null);
 
   useEffect(() => {
-    console.log(inputWidth);
-    console.log(inputHeight);
-
     if (isChange) {
       titleRefInput.current.focus();
     }
   }, [isChange]);
 
   const titleClickHandler = () => {
-    console.log(titleRef.current.clientHeight);
-    console.log(titleRef.current.clientWidth);
     if (!isChange) {
       setInputHeight(titleRef.current.clientHeight - 6 + "px");
       setInputWidth(titleRef.current.clientWidth - 8 + "px");
@@ -28,7 +23,17 @@ function TaskBoard({ boardName, boardId, taskCards }) {
     }
   };
 
+  const titleSubmitHandler = (e) => {
+    e.preventDefault();
+
+    titleInputBlurHandler();
+  };
+
   const titleInputBlurHandler = () => {
+    const nextTitle = titleRefInput.current.value;
+    if (nextTitle !== "" || nextTitle !== boardName) {
+      changeNameCallback({ name: nextTitle, boardId: boardId });
+    }
     setIsChange(false);
   };
 
@@ -43,12 +48,15 @@ function TaskBoard({ boardName, boardId, taskCards }) {
           >
             <h3 onClick={titleClickHandler} ref={titleRef}>
               {isChange ? (
-                <input
-                  className="taskTitleInput"
-                  onBlur={titleInputBlurHandler}
-                  ref={titleRefInput}
-                  placeholder="タイトル変更"
-                ></input>
+                <form action="" onSubmit={titleSubmitHandler}>
+                  <input
+                    className="taskTitleInput"
+                    onBlur={titleInputBlurHandler}
+                    ref={titleRefInput}
+                    placeholder={boardName}
+                    defaultValue={boardName}
+                  />
+                </form>
               ) : (
                 boardName
               )}

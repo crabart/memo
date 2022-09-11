@@ -64,7 +64,7 @@ function Main() {
 
   const onDragEndHandler = (data) => {
     if (!data.destination) {
-      return
+      return;
     }
 
     const mainTaskBoard = [...taskBoard];
@@ -87,6 +87,30 @@ function Main() {
     setTaskBoard(mainTaskBoard);
   };
 
+  const onChangeTitleHandler = ({ name, boardId }) => {
+    if (name === "") {
+      return;
+    }
+
+    const index = taskBoard.findIndex((it) => {
+      return it.id === boardId;
+    });
+
+    const newBoard = [...taskBoard];
+
+    const sameNameBoard = newBoard.find((it) => it.name === name);
+    if (sameNameBoard) {
+      if (sameNameBoard.id !== boardId) {
+        window.alert("同じ名前のタスクボードがあります");
+      }
+      return;
+    }
+
+    newBoard[index].name = name;
+
+    setTaskBoard(newBoard);
+  };
+
   return (
     <>
       <div className="main">
@@ -98,6 +122,7 @@ function Main() {
                 boardName={board.name}
                 boardId={board.id}
                 taskCards={board.taskCards}
+                changeNameCallback={onChangeTitleHandler}
               />
             );
           })}
