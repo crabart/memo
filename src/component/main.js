@@ -111,6 +111,22 @@ function Main() {
     setTaskBoard(newBoard);
   };
 
+  const onChangeCardHandler = ({ name, boardId, cardId }) => {
+    if (name === "") {
+      return;
+    }
+
+    const newBoard = [...taskBoard];
+    const boardIndex = newBoard.findIndex((it) => it.id === boardId);
+    const cardIndex = newBoard[boardIndex].taskCards.findIndex(
+      (it) => it.id === cardId
+    );
+
+    newBoard[boardIndex].taskCards[cardIndex].name = name;
+
+    setTaskBoard(newBoard);
+  };
+
   return (
     <>
       <div className="main">
@@ -122,7 +138,8 @@ function Main() {
                 boardName={board.name}
                 boardId={board.id}
                 taskCards={board.taskCards}
-                changeNameCallback={onChangeTitleHandler}
+                changeBoardNameCallback={onChangeTitleHandler}
+                changeCardNameCallback={onChangeCardHandler}
               />
             );
           })}
