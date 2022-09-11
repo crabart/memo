@@ -3,7 +3,7 @@ function Footer() {
     <footer>
       <div className="footerTitle">Thank you for using!!</div>
 
-      <style jsx="true">{`
+      <style jsx>{`
         footer {
           height: 100px;
           background-color: #c1e0ff;

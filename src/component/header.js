@@ -7,7 +7,7 @@ function Header() {
         <a href="/logout">ログアウト</a>
       </div>
 
-      <style jsx="true">{`
+      <style jsx>{`
         header {
           height: 100px;
           background-color: #ffeddb;

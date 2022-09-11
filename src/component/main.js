@@ -103,7 +103,7 @@ function Main() {
           })}
         </DragDropContext>
 
-        <style jsx="true">{`
+        <style jsx>{`
           .main {
             display: flex;
           }

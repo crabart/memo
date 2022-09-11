@@ -69,7 +69,7 @@ function TaskBoard({ boardName, boardId, taskCards }) {
         )}
       </Droppable>
 
-      <style jsx="true">{`
+      <style jsx>{`
         .taskBoard {
           margin: 10px 0 10px 10px;
           border: 1px solid black;
