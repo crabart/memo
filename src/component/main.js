@@ -45,15 +45,15 @@ function Main() {
       name: "タスクボード3",
       taskCards: [
         {
-          id: "4",
+          id: "7",
           name: "タスクカード7",
         },
         {
-          id: "5",
+          id: "8",
           name: "タスクカード8",
         },
         {
-          id: "6",
+          id: "9",
           name: "タスクカード9",
         },
       ],
