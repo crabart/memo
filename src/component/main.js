@@ -63,35 +63,24 @@ function Main() {
   const [taskBoard, setTaskBoard] = useState(defaultBoard);
 
   const onDragEndHandler = (data) => {
-    console.log(data);
     const mainTaskBoard = [...taskBoard];
     const sourceTaskBoardIndex = mainTaskBoard.findIndex((element) => {
       return element.id === data.source.droppableId;
     });
-    const [removedBoard] = mainTaskBoard.splice(sourceTaskBoardIndex, 1);
-    console.log("removedBoard");
-    console.log(removedBoard);
-    console.log("splicedBoard");
-    console.log(mainTaskBoard);
+    const sourceTaskCard = mainTaskBoard[sourceTaskBoardIndex].taskCards;
 
-    const mainTaskCard = [...removedBoard.taskCards]
-    const sourceTaskCardIndex = data.source.index
-    const [removedCard] = mainTaskCard.splice(sourceTaskCardIndex, 1)
-    console.log("removedCard");
-    console.log(removedCard);
-    console.log("splicedCard");
-    console.log(mainTaskCard);
+    const [removedCard] = sourceTaskCard.splice(data.source.index, 1);
 
-    mainTaskCard.splice(data.destination.index, 0, removedCard)
-    console.log("combinedCard");
-    console.log(mainTaskCard);
-    removedBoard.taskCards = mainTaskCard
-    console.log(removedBoard)
+    const destinationTaskBoardIndex = mainTaskBoard.findIndex((element) => {
+      return element.id === data.destination.droppableId;
+    });
 
-    mainTaskBoard.splice(sourceTaskBoardIndex, 0, removedBoard)
-    console.log(mainTaskBoard)
+    const destinationTaskCard =
+      mainTaskBoard[destinationTaskBoardIndex].taskCards;
 
-    setTaskBoard(mainTaskBoard)
+    destinationTaskCard.splice(data.destination.index, 0, removedCard);
+
+    setTaskBoard(mainTaskBoard);
   };
 
   return (
