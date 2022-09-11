@@ -11,17 +11,14 @@ function Main() {
         {
           id: "1",
           name: "タスクカード1",
-          index: 1,
         },
         {
           id: "2",
           name: "タスクカード2",
-          index: 2,
         },
         {
           id: "3",
           name: "タスクカード3",
-          index: 3,
         },
       ],
     },
@@ -32,17 +29,32 @@ function Main() {
         {
           id: "4",
           name: "タスクカード4",
-          index: 1,
         },
         {
           id: "5",
           name: "タスクカード5",
-          index: 2,
         },
         {
           id: "6",
           name: "タスクカード6",
-          index: 3,
+        },
+      ],
+    },
+    {
+      id: "3",
+      name: "タスクボード3",
+      taskCards: [
+        {
+          id: "4",
+          name: "タスクカード7",
+        },
+        {
+          id: "5",
+          name: "タスクカード8",
+        },
+        {
+          id: "6",
+          name: "タスクカード9",
         },
       ],
     },
@@ -70,7 +82,7 @@ function Main() {
 
         <style jsx="true">{`
           .main {
-            display: inline-block;
+            display: flex;
           }
         `}</style>
       </div>
