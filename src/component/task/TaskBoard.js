@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import TaskCard from "./task_card";
+import TaskCard from "./TaskCard";
 
 function TaskBoard({
   boardName,
