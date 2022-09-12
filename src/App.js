@@ -1,14 +1,15 @@
-import Header from "./component/header";
-import Footer from "./component/footer";
-import Main from "./component/main";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TaskIndex from "./component/TaskIndex"
+import LoginIndex from "./component/LoginIndex";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={`/`} element={<TaskIndex />} />
+        <Route path={`/login/`} element={<LoginIndex />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
