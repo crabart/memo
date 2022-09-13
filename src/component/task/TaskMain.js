@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TaskBoard from "./task/TaskBoard";
+import TaskBoard from "./TaskBoard";
 import { DragDropContext } from "react-beautiful-dnd";
 
 function Main() {
