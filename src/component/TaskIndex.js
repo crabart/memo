@@ -1,6 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import TaskMain from "./TaskMain";
+import TaskMain from "./task/TaskMain";
 
 function TaskIndex() {
   return (
@@ -12,4 +12,4 @@ function TaskIndex() {
   );
 }
 
-export default TaskMain;
+export default TaskIndex;
