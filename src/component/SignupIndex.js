@@ -1,6 +1,6 @@
 import LoginForm from "./login/LoginForm";
 
-function LoginIndex() {
+export default function SignupIndex() {
   const onSubmitHandler = () => {};
 
   return (
@@ -9,7 +9,7 @@ function LoginIndex() {
         <h1>メモアプリケーションテストへようこそ</h1>
       </div>
 
-      <LoginForm title={"Sign In"} onSubmitCallback={onSubmitHandler} />
+      <LoginForm title={"Sign Up"} onSubmitCallback={onSubmitHandler} />
 
       <style jsx>{`
         .main {
@@ -27,5 +27,3 @@ function LoginIndex() {
     </div>
   );
 }
-
-export default LoginIndex;
