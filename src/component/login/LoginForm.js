@@ -1,23 +1,22 @@
 import { useForm } from "react-hook-form";
 
-function LoginForm() {
+function LoginForm({ title, onSubmitCallback }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = () => {
-    console.log("submitted");
-  };
-
   return (
     <>
       <div className="loginForm">
         <div className="loginFromTitle">
-          <h3>ログイン</h3>
+          <h3>{title}</h3>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="formContainer">
+        <form
+          onSubmit={handleSubmit(onSubmitCallback)}
+          className="formContainer"
+        >
           <div>
             <label htmlFor="email" className="formLabel">
               Eメール
