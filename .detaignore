@@ -1,3 +1,4 @@
 public
 src
 config-overrides.js
+.env
