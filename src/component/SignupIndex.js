@@ -1,12 +1,23 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import SignupForm from './form/SignupForm';
 
-const baseURL =
-  'http://k8cr7e.deta.dev' + process.env.REACT_APP_PORT + '/signup';
+const baseURL = process.env.REACT_APP_URL
+  ? process.env.REACT_APP_URL + '/signup'
+  : 'https://k8cr7e.deta.dev:3000/signup';
 
 export default function SignupIndex() {
-  const onSubmitHandler = async (data) => {
-    await axios.post(baseURL, data);
+  const navigate = useNavigate();
+  const onSubmitHandler = (data) => {
+    axios
+      .post(baseURL, data)
+      .then((dat) => {
+        navigate('/');
+      })
+      .catch((dat) => {
+        const body = dat.response.data;
+        navigate('/signup?code=' + body.code);
+      });
   };
 
   return (

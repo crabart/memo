@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TaskIndex from "./component/TaskIndex";
-import LoginIndex from "./component/LoginIndex";
-import SignupIndex from "./component/SignupIndex";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TaskIndex from './component/TaskIndex';
+import LoginIndex from './component/LoginIndex';
+import SignupIndex from './component/SignupIndex';
 
 function App() {
   return (
