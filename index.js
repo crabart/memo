@@ -4,11 +4,10 @@ const bcrypt = require('bcrypt');
 const { Base } = require('deta');
 const userBase = Base('users');
 const app = express();
-
-app.use(express.static('build'));
+const path = require('path');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.post(
   '/signup',
@@ -18,31 +17,35 @@ app.post(
       const user = await userBase.get(email);
 
       if (user) {
-        res.redirect('/signup?error=100');
+        res.status(400).send(JSON.stringify({ code: '100' }));
       } else {
         next();
       }
     } catch (error) {
-      res.send(error);
+      res.status(400).send(JSON.stringify({ code: '999', message: error }));
     }
   },
-  async (req, res) => {
+  (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
 
     try {
       var hash = bcrypt.hashSync(password, 10);
-      await userBase.put({ name: name, password: hash }, email);
-      res.redirect('/');
+      userBase.put({ name: name, password: hash }, email).then(() => {
+        res.send('regidter');
+      });
     } catch (error) {
-      res.send(error);
+      res.status(400).send(JSON.stringify({ code: '999', message: error }));
     }
   }
 );
 
-app.get('/', (req, res) => {
-  res.send('index.html');
+//ミドルウエアでstaticパスを追加（ただ、これだけだと直アクセスや無いpathだと動かない）
+app.use(express.static(path.join(__dirname, '.', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '.', 'build', 'index.html'));
 });
 
 // export 'app'

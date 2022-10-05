@@ -1,4 +1,4 @@
-import LoginForm from "./login/LoginForm";
+import LoginForm from './form/LoginForm';
 
 function LoginIndex() {
   const onSubmitHandler = () => {};
@@ -9,11 +9,11 @@ function LoginIndex() {
         <h1>メモアプリケーションテストへようこそ</h1>
       </div>
 
-      <LoginForm title={"Sign In"} onSubmitCallback={onSubmitHandler} />
+      <LoginForm title={'Sign In'} onSubmitCallback={onSubmitHandler} />
 
       <style jsx>{`
         .main {
-          background-image: url("24474687_m.jpg");
+          background-image: url('24474687_m.jpg');
           background-size: cover;
           min-height: 800px;
         }
