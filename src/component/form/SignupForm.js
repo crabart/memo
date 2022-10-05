@@ -2,28 +2,11 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 function SignupForm({ title, onSubmitCallback, message }) {
-  const [errorMessage, setErrorMessage] = useState(message);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { onBlur, onChange, ref, name } = {
-    ...register('email', { required: '入力が必須の項目です' }),
-  };
-
-  const emailOnChange = (e) => {
-    setErrorMessage('');
-    message = '';
-    onChange(e);
-  };
-
-  useEffect(() => {
-    console.log('useEffect');
-    setErrorMessage(message);
-  }, [message]);
 
   return (
     <>
@@ -55,15 +38,11 @@ function SignupForm({ title, onSubmitCallback, message }) {
             <input
               id="email"
               className="inputElement"
-              onBlur={onBlur}
-              ref={ref}
-              name={name}
-              onChange={emailOnChange}
+              {...register('email', { required: '入力が必須の項目です' })}
             />
             {errors.email && (
               <div className="errorMessage">{errors.email.message}</div>
             )}
-            {errorMessage && <div className="errorMessage">{errorMessage}</div>}
           </div>
           <div>
             <label htmlFor="password" className="formLabel">
@@ -84,6 +63,7 @@ function SignupForm({ title, onSubmitCallback, message }) {
               送信
             </button>
           </div>
+          {message && <div className="errorMessage">{message}</div>}
         </form>
       </div>
       <style jsx>{`
