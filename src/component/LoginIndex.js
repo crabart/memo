@@ -20,13 +20,32 @@ function LoginIndex() {
       });
   };
 
+  const search = useLocation().search;
+  const query = new URLSearchParams(search);
+  const code = query.get('code');
+
+  let message;
+  let serverError;
+  if (code) {
+    if (code === '200') {
+      message = 'メールアドレスとパスワードが一致しません';
+    } else {
+      serverError = 'サーバーでエラーが発生しました';
+    }
+  }
+
   return (
     <div className="main">
       <div className="title">
         <h1>メモアプリケーションテストへようこそ</h1>
       </div>
+      {serverError ? <h3>{serverError}</h3> : <></>}
 
-      <LoginForm title={'Sign In'} onSubmitCallback={onSubmitHandler} />
+      <LoginForm
+        title={'Sign In'}
+        onSubmitCallback={onSubmitHandler}
+        message={message}
+      />
 
       <style jsx>{`
         .main {

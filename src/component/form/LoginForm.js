@@ -1,6 +1,6 @@
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
-function LoginForm({ title, onSubmitCallback }) {
+function LoginForm({ title, onSubmitCallback, message }) {
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ function LoginForm({ title, onSubmitCallback }) {
             <input
               id="email"
               className="inputElement"
-              {...register("email", { required: true })}
+              {...register('email', { required: true })}
             />
             {errors.email && (
               <div className="errorMessage">入力が必須の項目です</div>
@@ -38,7 +38,7 @@ function LoginForm({ title, onSubmitCallback }) {
               id="password"
               type="password"
               className="inputElement"
-              {...register("password", { required: true })}
+              {...register('password', { required: true })}
             />
             {errors.password && (
               <div className="errorMessage">入力が必須の項目です</div>
@@ -49,6 +49,7 @@ function LoginForm({ title, onSubmitCallback }) {
               送信
             </button>
           </div>
+          {message && <div className="errorMessage">{message}</div>}
         </form>
       </div>
       <style jsx>{`
