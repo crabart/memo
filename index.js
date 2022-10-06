@@ -9,6 +9,29 @@ const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.post('/signin', async (req, res) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await userBase.get(email);
+    if (user === null) {
+      res.status(401).send(JSON.stringify({ code: '200' }));
+    } else {
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (err) {
+          res.status(400).send(JSON.stringify({ code: '999', message: err }));
+        } else if (result) {
+          res.send('signin success');
+        } else {
+          res.status(401).send(JSON.stringify({ code: '200' }));
+        }
+      });
+    }
+  } catch (error) {
+    res.status(400).send(JSON.stringify({ code: '999', message: error }));
+  }
+});
+
 app.post(
   '/signup',
   async (req, res, next) => {
