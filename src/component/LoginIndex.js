@@ -1,7 +1,24 @@
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from './form/LoginForm';
 
+const baseURL = process.env.REACT_APP_URL
+  ? process.env.REACT_APP_URL + '/signin'
+  : 'https://k8cr7e.deta.dev:3000/signin';
+
 function LoginIndex() {
-  const onSubmitHandler = () => {};
+  const navigate = useNavigate();
+  const onSubmitHandler = (data) => {
+    axios
+      .post(baseURL, data)
+      .then((dat) => {
+        navigate('/');
+      })
+      .catch((dat) => {
+        const body = dat.response.data;
+        navigate('/login?code=' + body.code);
+      });
+  };
 
   return (
     <div className="main">
