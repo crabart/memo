@@ -1,16 +1,20 @@
-import { useState, useRef, useEffect } from "react";
-import { Draggable } from "react-beautiful-dnd";
+import { useState, useRef, useEffect } from 'react';
 
-const defaultCardPadding = "16px";
-
-function TaskCard({ id, name, index, changeCardNameCallBack }) {
+export default function TaskCard({
+  id,
+  name,
+  changeCardNameCallBack,
+  isDragging,
+}) {
   const [isChange, setIsChange] = useState(false);
-  const [inputWidth, setInputWidth] = useState("");
-  const [inputHeight, setInputHeight] = useState("");
+  const [inputWidth, setInputWidth] = useState('');
+  const [inputHeight, setInputHeight] = useState('');
   const cardRefInput = useRef(null);
   const cardRef = useRef(null);
 
-  const taskCardPadding = isChange ? "0px" : defaultCardPadding;
+  const defaultCardPadding = '16px';
+
+  const taskCardPadding = isChange ? '0px' : defaultCardPadding;
 
   useEffect(() => {
     if (isChange) {
@@ -20,8 +24,8 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
 
   const cardClickHandler = () => {
     if (!isChange) {
-      setInputHeight(cardRef.current.clientHeight - 2 + "px");
-      setInputWidth(cardRef.current.clientWidth - 8 + "px");
+      setInputHeight(cardRef.current.clientHeight - 2 + 'px');
+      setInputWidth(cardRef.current.clientWidth - 4 + 'px');
       setIsChange(true);
     }
   };
@@ -40,40 +44,32 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
     changeCardNameImpl({ name: e.target.value });
   };
 
+  const color = isDragging ? 'lightgreen' : 'lightblue';
   return (
-    <>
-      <Draggable key={id} draggableId={id} index={index}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <div className="taskCard" ref={cardRef} onClick={cardClickHandler}>
-              {isChange ? (
-                <form action="" onSubmit={cardSubmitHandler}>
-                  <input
-                    className="taskCardInput"
-                    onBlur={cardInputBlurHandler}
-                    ref={cardRefInput}
-                    placeholder={name}
-                    defaultValue={name}
-                    name="newName"
-                  />
-                </form>
-              ) : (
-                <p>{name}</p>
-              )}
-            </div>
-          </div>
+    <div>
+      <div className="taskCard" ref={cardRef} onClick={cardClickHandler}>
+        {isChange ? (
+          <form action="" onSubmit={cardSubmitHandler}>
+            <input
+              className="taskCardInput"
+              onBlur={cardInputBlurHandler}
+              ref={cardRefInput}
+              placeholder={name}
+              defaultValue={name}
+              name="newName"
+            />
+          </form>
+        ) : (
+          <p>{name}</p>
         )}
-      </Draggable>
+      </div>
 
       <style jsx>{`
         .taskCard {
           margin: 8px;
           border: 1px solid black;
           padding: ${taskCardPadding};
+          background-color: ${color};
         }
 
         .taskCardInput {
@@ -84,8 +80,6 @@ function TaskCard({ id, name, index, changeCardNameCallBack }) {
           border: none;
         }
       `}</style>
-    </>
+    </div>
   );
 }
-
-export default TaskCard;

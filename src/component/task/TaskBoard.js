@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import { Droppable } from "react-beautiful-dnd";
-import TaskCard from "./TaskCard";
+import { useState, useRef, useEffect } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
+import TaskCard from './TaskCardDrag';
 
 function TaskBoard({
   boardName,
@@ -10,8 +10,8 @@ function TaskBoard({
   changeCardNameCallback,
 }) {
   const [isChange, setIsChange] = useState(false);
-  const [inputWidth, setInputWidth] = useState("");
-  const [inputHeight, setInputHeight] = useState("");
+  const [inputWidth, setInputWidth] = useState('');
+  const [inputHeight, setInputHeight] = useState('');
   const titleRefInput = useRef(null);
   const titleRef = useRef(null);
 
@@ -23,8 +23,8 @@ function TaskBoard({
 
   const titleClickHandler = () => {
     if (!isChange) {
-      setInputHeight(titleRef.current.clientHeight - 6 + "px");
-      setInputWidth(titleRef.current.clientWidth - 8 + "px");
+      setInputHeight(titleRef.current.clientHeight - 6 + 'px');
+      setInputWidth(titleRef.current.clientWidth - 8 + 'px');
       setIsChange(true);
     }
   };
@@ -37,7 +37,7 @@ function TaskBoard({
 
   const titleInputBlurHandler = () => {
     const nextTitle = titleRefInput.current.value;
-    if (nextTitle !== "" || nextTitle !== boardName) {
+    if (nextTitle !== '' || nextTitle !== boardName) {
       changeBoardNameCallback({ name: nextTitle, boardId: boardId });
     }
     setIsChange(false);
