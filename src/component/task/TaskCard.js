@@ -1,16 +1,49 @@
+import { useState, useRef, useEffect } from 'react';
+
 export default function TaskCard({
+  id,
   name,
-  isChange,
-  cardRef,
-  cardRefInput,
-  cardClickHandler,
-  cardSubmitHandler,
-  cardInputBlurHandler,
-  taskCardPadding,
-  inputHeight,
-  inputWidth,
+  changeCardNameCallBack,
   isDragging,
 }) {
+  const [isChange, setIsChange] = useState(false);
+  const [inputWidth, setInputWidth] = useState('');
+  const [inputHeight, setInputHeight] = useState('');
+  const cardRefInput = useRef(null);
+  const cardRef = useRef(null);
+
+  const defaultCardPadding = '16px';
+
+  const taskCardPadding = isChange ? '0px' : defaultCardPadding;
+
+  useEffect(() => {
+    if (isChange) {
+      cardRefInput.current.focus();
+    }
+  }, [isChange]);
+
+  const cardClickHandler = () => {
+    if (!isChange) {
+      setInputHeight(cardRef.current.clientHeight - 2 + 'px');
+      setInputWidth(cardRef.current.clientWidth - 4 + 'px');
+      setIsChange(true);
+    }
+  };
+
+  const changeCardNameImpl = ({ name }) => {
+    changeCardNameCallBack({ name: name, cardId: id });
+    setIsChange(false);
+  };
+
+  const cardSubmitHandler = (e) => {
+    e.preventDefault();
+    changeCardNameImpl({ name: e.target.newName.value });
+  };
+
+  const cardInputBlurHandler = (e) => {
+    changeCardNameImpl({ name: e.target.value });
+  };
+
   const color = isDragging ? 'lightgreen' : 'lightblue';
   return (
     <div>
