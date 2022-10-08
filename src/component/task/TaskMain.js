@@ -1,60 +1,60 @@
-import { useState } from "react";
-import TaskBoard from "./TaskBoard";
-import { DragDropContext } from "react-beautiful-dnd";
+import { useState } from 'react';
+import TaskBoard from './TaskBoard';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 function Main() {
   const defaultBoard = [
     {
-      id: "1",
-      name: "タスクボード1",
+      id: '1',
+      name: 'タスクボード1',
       taskCards: [
         {
-          id: "1",
-          name: "タスクカード1",
+          id: '1',
+          name: 'タスクカード1',
         },
         {
-          id: "2",
-          name: "タスクカード2",
+          id: '2',
+          name: 'タスクカード2',
         },
         {
-          id: "3",
-          name: "タスクカード3",
+          id: '3',
+          name: 'タスクカード3',
         },
       ],
     },
     {
-      id: "2",
-      name: "タスクボード2",
+      id: '2',
+      name: 'タスクボード2',
       taskCards: [
         {
-          id: "4",
-          name: "タスクカード4",
+          id: '4',
+          name: 'タスクカード4',
         },
         {
-          id: "5",
-          name: "タスクカード5",
+          id: '5',
+          name: 'タスクカード5',
         },
         {
-          id: "6",
-          name: "タスクカード6",
+          id: '6',
+          name: 'タスクカード6',
         },
       ],
     },
     {
-      id: "3",
-      name: "タスクボード3",
+      id: '3',
+      name: 'タスクボード3',
       taskCards: [
         {
-          id: "7",
-          name: "タスクカード7",
+          id: '7',
+          name: 'タスクカード7',
         },
         {
-          id: "8",
-          name: "タスクカード8",
+          id: '8',
+          name: 'タスクカード8',
         },
         {
-          id: "9",
-          name: "タスクカード9",
+          id: '9',
+          name: 'タスクカード9',
         },
       ],
     },
@@ -88,7 +88,7 @@ function Main() {
   };
 
   const onChangeTitleHandler = ({ name, boardId }) => {
-    if (name === "") {
+    if (name === '') {
       return;
     }
 
@@ -101,7 +101,7 @@ function Main() {
     const sameNameBoard = newBoard.find((it) => it.name === name);
     if (sameNameBoard) {
       if (sameNameBoard.id !== boardId) {
-        window.alert("同じ名前のタスクボードがあります");
+        window.alert('同じ名前のタスクボードがあります');
       }
       return;
     }
@@ -112,7 +112,7 @@ function Main() {
   };
 
   const onChangeCardHandler = ({ name, boardId, cardId }) => {
-    if (name === "") {
+    if (name === '') {
       return;
     }
 
@@ -123,6 +123,20 @@ function Main() {
     );
 
     newBoard[boardIndex].taskCards[cardIndex].name = name;
+
+    setTaskBoard(newBoard);
+  };
+
+  const addCardHandler = (boardId) => {
+    const newBoard = [...taskBoard];
+    const boardIndex = newBoard.findIndex((it) => it.id === boardId);
+    const newCard = {
+      id: crypto.randomUUID(),
+      name: '新タスク',
+    };
+
+    console.log(newCard);
+    newBoard[boardIndex].taskCards.push(newCard);
 
     setTaskBoard(newBoard);
   };
@@ -140,6 +154,7 @@ function Main() {
                 taskCards={board.taskCards}
                 changeBoardNameCallback={onChangeTitleHandler}
                 changeCardNameCallback={onChangeCardHandler}
+                addCardCallback={addCardHandler}
               />
             );
           })}

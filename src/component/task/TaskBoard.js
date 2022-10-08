@@ -8,6 +8,7 @@ function TaskBoard({
   taskCards,
   changeBoardNameCallback,
   changeCardNameCallback,
+  addCardCallback,
 }) {
   const [isChange, setIsChange] = useState(false);
   const [inputWidth, setInputWidth] = useState('');
@@ -84,6 +85,14 @@ function TaskBoard({
               );
             })}
             {provided.placeholder}
+            <div className="addCard">
+              <button
+                onClick={() => addCardCallback(boardId)}
+                className="addCardButton"
+              >
+                +
+              </button>
+            </div>
           </div>
         )}
       </Droppable>
@@ -102,6 +111,23 @@ function TaskBoard({
         .taskTitleInput {
           height: ${inputHeight};
           width: ${inputWidth};
+        }
+
+        .addCard {
+          display: flex;
+          justify-content: flex-end;
+          margin-right: 10px;
+          margin-bottom: 10px;
+        }
+
+        .addCardButton {
+          font-size: 30px;
+          border-radius: 50%;
+          height: 30px;
+          width: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       `}</style>
     </>
