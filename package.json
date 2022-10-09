@@ -5,7 +5,9 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "deta": "^1.1.0",
-    "express": "^4.18.1"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "nodemailer": "^6.8.0"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.8.5",
@@ -28,9 +30,10 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "GENERATE_SOURCEMAP=false react-app-rewired build",
-    "build-start": "GENERATE_SOURCEMAP=false react-app-rewired build && node .",
+    "build-start": "GENERATE_SOURCEMAP=false react-app-rewired build && REACT_APP_URL=http://localhost:3000 node .",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-node": "REACT_APP_URL=http://localhost:3000 node ."
   },
   "eslintConfig": {
     "extends": [

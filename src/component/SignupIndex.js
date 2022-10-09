@@ -12,7 +12,7 @@ export default function SignupIndex() {
     axios
       .post(baseURL, data)
       .then((dat) => {
-        navigate('/');
+        navigate('/login');
       })
       .catch((dat) => {
         const body = dat.response.data;

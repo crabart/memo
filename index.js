@@ -3,6 +3,11 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const { Base } = require('deta');
 const userBase = Base('users');
+const tempUser = Base('tempUsers');
+const crypto = require('crypto');
+require('dotenv').config({ path: '.env.mailer' });
+const nodemailer = require('nodemailer');
+
 const app = express();
 const path = require('path');
 
@@ -32,6 +37,28 @@ app.post('/signin', async (req, res) => {
   }
 });
 
+app.get('/signup/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const tempData = await tempUser.get(id);
+    if (tempData === null) {
+      res.status(400).send('Bad request');
+    } else {
+      userBase
+        .put(
+          { name: tempData.name, password: tempData.password },
+          tempData.email
+        )
+        .then(() => {
+          tempUser.delete(id);
+
+          res.redirect('/');
+        });
+    }
+  } catch (error) {}
+});
+
 app.post(
   '/signup',
   async (req, res, next) => {
@@ -52,12 +79,44 @@ app.post(
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
-
+    const uuid = crypto.randomUUID();
     try {
       var hash = bcrypt.hashSync(password, 10);
-      userBase.put({ name: name, password: hash }, email).then(() => {
-        res.send('regidter');
-      });
+      tempUser
+        .put({ name: name, email: email, password: hash }, uuid, {
+          expireIn: 3600,
+        })
+        .then(() => {
+          const transporter = nodemailer.createTransport({
+            host: process.env.MAIL_HOST,
+            port: process.env.MAIL_PORT,
+            secure: false,
+            auth: {
+              user: process.env.MAIL_USER,
+              pass: process.env.MAIL_PASS,
+            },
+          });
+
+          const baseURL = process.env.REACT_APP_URL
+            ? process.env.REACT_APP_URL + '/signup/'
+            : 'https://k8cr7e.deta.dev:3000/signup/';
+          const url = baseURL + uuid;
+
+          const data = {
+            from: 'noreply@crabservices.com',
+            to: email,
+            subject: '仮登録メール',
+            html: `<div>登録ありがとうございます。<br>現在仮登録中ですので以下のリンクにアクセスして本登録を完了してください。</div>
+                    <div><a href=${url}>${url}<a></div>
+                    <div>もし本メールに心当たりがない場合、破棄をお願いいたします。</div>`,
+          };
+
+          transporter.sendMail(data, (error, info) => {
+            console.log(error);
+            console.log(info);
+            res.send('register');
+          });
+        });
     } catch (error) {
       res.status(400).send(JSON.stringify({ code: '999', message: error }));
     }
@@ -73,3 +132,7 @@ app.get('*', (req, res) => {
 
 // export 'app'
 module.exports = app;
+
+app.listen(3000, () => {
+  console.log('listen start');
+});
